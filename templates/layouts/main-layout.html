@@ -13,17 +13,15 @@
     <meta name="author" content="Christian Williams" />
     <meta name="keywords" content="{{- .Keywords -}}" />
 
-    <!-- og images -->
+    <!-- TODO: og images -->
     <meta property="og:title" content="{{- .Title -}}" />
-    <meta property="og:description" content="{{- .Desciption -}}" />
+    <meta property="og:description" content="{{- .Description -}}" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="{{- .OgImage -}}" />
-    <meta property="og:url" content="{{- .OgUrl -}}" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
     
-    <!-- favicon -->
-    {{ range .FaviconTags }}
-    <link rel="{{- .Rel -}}" sizes="{{- .Sizes -}}" type="{{- .Type -}}" color="{{- .Color -}}"  href="{{- .Href -}}">
-    {{ end }}
+    <!-- TODO: favicon -->
+    <link rel="" sizes="" type="" color=""  href="">
 
     <!-- manifest.json -->
     <link rel="manifest" href="./static/manifest.json" />

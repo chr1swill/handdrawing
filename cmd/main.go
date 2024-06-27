@@ -1,18 +1,13 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"path/filepath"
 )
-
-type FaviconTagData struct {
-	Rel   template.URL
-	Sizes string
-	Type  template.URL
-	Color string
-	Href  template.URL
-}
 
 type ScriptTagData struct {
 	Src template.URL
@@ -22,30 +17,90 @@ type MainLayoutData struct {
 	Title       string
 	Description string
 	Keywords    []string
-	OgImage     template.URL
-	OgUrl       template.URL
-	FaviconTags []FaviconTagData
 	ScriptTags  []ScriptTagData
 	BodyContent template.HTML
+}
+
+var tmpl *template.Template
+
+func loadTemplates(paths []string) {
+	tmpl = template.New("")
+
+	for _, pattern := range paths {
+
+		matches, err := filepath.Glob(pattern)
+		if err != nil {
+			log.Printf("Failed to glob pattern %s: %v", pattern, err)
+			continue
+		}
+
+		if matches == nil {
+			log.Printf("No templates matched the pattern %s: %v", pattern, err)
+			continue
+		}
+
+		for _, match := range matches {
+			_, err := tmpl.ParseFiles(match)
+			if err != nil {
+				log.Fatalf("Failed to parse template %s: %v", match, err)
+			}
+		}
+	}
+}
+
+func homePageHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.Error(w, "404 Not Found", http.StatusNotFound)
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var bodyContent bytes.Buffer
+
+	err := tmpl.ExecuteTemplate(&bodyContent, "home.html", nil)
+	if err != nil {
+		http.Error(w, "Failed to render content", http.StatusInternalServerError)
+		return
+	}
+
+	homePageData := MainLayoutData{
+		Title:       "Hand Drawing App",
+		Description: "This is my hand drawing app",
+		Keywords:    []string{"notebook", "hand draw", "drawings", "digital art"},
+		ScriptTags:  []ScriptTagData{{Src: ""}},
+		BodyContent: template.HTML(bodyContent.String()),
+	}
+
+	err = tmpl.ExecuteTemplate(w, "main-layout.html", homePageData)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func main() {
 	rootDir := filepath.Join(".")
 
 	templateDir := filepath.Join(rootDir, "templates")
-	viewDir := filepath.Join(templateDir, "views")
-	partialDir := filepath.Join(templateDir, "partials")
-	layoutDir := filepath.Join(templateDir, "layouts")
+	viewFiles := filepath.Join(templateDir, "views", "*.html")
+	partialFiles := filepath.Join(templateDir, "partials", "*.html")
+	layoutFiles := filepath.Join(templateDir, "layouts", "*.html")
 
-	staticDir := filepath.Join(rootDir, "static")
-	cssDir := filepath.Join(staticDir, "css")
+	paths := []string{viewFiles, partialFiles, layoutFiles}
+	loadTemplates(paths)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			w.WriteHeader(http.StatusMethodNotAllowed)
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		}
+	staticFilesPath := filepath.Join(rootDir, "static")
+	fs := http.FileServer(http.Dir(staticFilesPath))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
+	http.HandleFunc("/", homePageHandler)
 
-	})
+	fmt.Printf("Listening on http://localhost:8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 }
