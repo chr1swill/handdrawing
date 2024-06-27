@@ -38,11 +38,11 @@
 
     <!-- js -->
     {{ range .ScriptsTags }}
-    <script defer src="{{- .SrciptSource -}}"></script>
+    <script defer src="{{- .Src -}}"></script>
     {{ end }}
 </head>
 
-<body class="w-full h-full bg-background fc-text">
+<body class="w-full h-full bg-background ff fc-text">
     {{ .BodyContent }}
 </body>
 
