@@ -7,12 +7,13 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strings"
 )
 
 type MainLayoutData struct {
 	Title       string
 	Description string
-	Keywords    []string
+	Keywords    string
 	BodyContent template.HTML
 }
 
@@ -65,7 +66,7 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	homePageData := MainLayoutData{
 		Title:       "Hand Drawing App",
 		Description: "This is my hand drawing app",
-		Keywords:    []string{"notebook", "hand draw", "drawings", "digital art"},
+		Keywords:    strings.Join([]string{"notebook", "hand draw", "drawings", "digital art"}, ","),
 		BodyContent: template.HTML(bodyContent.String()),
 	}
 
