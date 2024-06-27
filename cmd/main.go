@@ -9,15 +9,10 @@ import (
 	"path/filepath"
 )
 
-type ScriptTagData struct {
-	Src template.URL
-}
-
 type MainLayoutData struct {
 	Title       string
 	Description string
 	Keywords    []string
-	ScriptTags  []ScriptTagData
 	BodyContent template.HTML
 }
 
@@ -71,7 +66,6 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 		Title:       "Hand Drawing App",
 		Description: "This is my hand drawing app",
 		Keywords:    []string{"notebook", "hand draw", "drawings", "digital art"},
-		ScriptTags:  []ScriptTagData{{Src: ""}},
 		BodyContent: template.HTML(bodyContent.String()),
 	}
 
