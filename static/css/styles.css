@@ -1,0 +1,144 @@
+:root {
+    --font-family: "Inter", sans-serif;
+    --font-size-base: 16px;
+    --scale-ratio: 1.333;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: rgb(16, 15, 6);
+    --background: rgb(253, 252, 247);
+    --primary: rgb(207, 188, 68);
+    --secondary: rgb(231, 219, 140);
+    --accent: rgb(227, 208, 84);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: rgb(249, 248, 240);
+    --background: rgb(8, 7, 2);
+    --primary: rgb(187, 168, 48);
+    --secondary: rgb(114, 102, 24);
+    --accent: rgb(171, 152, 28);
+  }
+}
+
+.ff {
+    font-family: var(--font-family);
+}
+
+.h1 {
+    font-size: calc(var(--font-size-base) * var(--font-size-base) * var(--scale-ratio) * var(--scale-ratio) * var(--scale-ratio) * var(--scale-ratio) * var(--scale-ratio));
+}
+
+.h2 {
+    font-size: calc(var(--font-size-base) * var(--font-size-base) * var(--scale-ratio) * var(--scale-ratio) * var(--scale-ratio) * var(--scale-ratio));
+}
+
+.h3 {
+    font-size: calc(var(--font-size-base) * var(--font-size-base) * var(--scale-ratio) * var(--scale-ratio) * var(--scale-ratio));
+}
+
+.h4 {
+    font-size: calc(var(--font-size-base) * var(--font-size-base) * var(--scale-ratio) * var(--scale-ratio));
+}
+
+.h5 {
+    font-size: calc(var(--font-size-base) * var(--font-size-base) * var(--scale-ratio));
+}
+
+.h6 {
+    font-size: calc(var(--font-size-base) * var(--font-size-base));
+}
+
+.p {
+    font-size: calc(var(--font-size-base));
+}
+
+.aside {
+    font-size: calc(var(--font-size-base) / var(--scale-ratio));
+}
+
+.fw-100 {
+    font-weight: 100;
+}
+
+.fw-200 {
+    font-weight: 200;
+}
+
+.fw-300 {
+    font-weight: 300;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-800 {
+    font-weight: 800;
+}
+
+.fw-900 {
+    font-weight: 900;
+}
+
+.fc-text {
+    color: var(--text);
+}
+
+.fc-background {
+    color: var(--background);
+}
+
+.fc-primary {
+    color: var(--primary);
+}
+
+.fc-secondary {
+    color: var(--secondary);
+}
+
+.fc-accent {
+    color: var(--accent);
+}
+
+.bg-text {
+    background-color: var(--text);
+}
+
+.bg-background {
+    background-color: var(--background);
+}
+
+.bg-primary {
+    background-color: var(--primary);
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
+}
+
+.bg-accent {
+    background-color: var(--accent);
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
