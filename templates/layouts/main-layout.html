@@ -1,0 +1,50 @@
+{{ block "main-layout" . }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{- .Title -}}</title>
+
+    <!-- seo -->
+    <meta name="description" content="{{- .Description -}}" />
+    <meta name="author" content="Christian Williams" />
+    <meta name="keywords" content="{{- .Keywords -}}" />
+
+    <!-- og images -->
+    <meta property="og:title" content="{{- .Title -}}" />
+    <meta property="og:description" content="{{- .Desciption -}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{- .OgImage -}}" />
+    <meta property="og:url" content="{{- .OgUrl -}}" />
+    
+    <!-- favicon -->
+    {{ range .FaviconTags }}
+    <link rel="{{- .Rel -}}" sizes="{{- .Sizes -}}" type="{{- .Type -}}" color="{{- .Color -}}"  href="{{- .Href -}}">
+    {{ end }}
+
+    <!-- manifest.json -->
+    <link rel="manifest" href="./static/manifest.json" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href="static/css/styles.css">
+
+    <!-- js -->
+    {{ range .ScriptsTags }}
+    <script defer src="{{- .SrciptSource -}}"></script>
+    {{ end }}
+</head>
+
+<body class="w-full h-full bg-background fc-text">
+    {{ .BodyContent }}
+</body>
+
+</html>
+{{ end }}
